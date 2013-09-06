@@ -1,8 +1,11 @@
 package ar.edu.utn.superior.interpolatron
 
+import scala.collection.mutable.SortedSet
+
 class Interpolatron {
 	type Punto = Tuple2[Double, Double]
-	private var puntos = Set[Punto]()
+	
+	var puntos = SortedSet[Punto]()
 
 	private def difDiv(xi: List[Punto]): Double = {
 		xi match {
@@ -13,15 +16,13 @@ class Interpolatron {
 	}
 
 	private def diferenciaDividida(n: Integer) = difDiv(puntos.toList take n)
-	
-	private def abscisas = puntos map {p => p._1}
-	
+		
 	private def verificarRepetido(punto: Punto) {
 	  if (abscisas contains punto._1) {
 	    throw new PuntoDuplicadoException
 	  }
-	} 
-
+	}
+	
 	def diferenciasDivididas = {
 	  if (puntos isEmpty) throw new NingunPuntoIngresadoException
 	  (1 to puntos.size) map {i => diferenciaDividida(i)}
@@ -29,6 +30,9 @@ class Interpolatron {
 	
 	def agregar(punto: Punto) = { verificarRepetido(punto); puntos += punto; this }
 	def quitar(punto: Punto) = { puntos -= punto; this }
+	
+	def abscisas = puntos map {p => p._1}
+	def ordenadas = puntos map {p => p._2}
 }
 
 class NingunPuntoIngresadoException extends RuntimeException
