@@ -33,6 +33,7 @@ class Interpolatron {
 	
 	def abscisas = puntos map {p => p._1}
 	def ordenadas = puntos map {p => p._2}
+	
 }
 
 class NingunPuntoIngresadoException extends RuntimeException
