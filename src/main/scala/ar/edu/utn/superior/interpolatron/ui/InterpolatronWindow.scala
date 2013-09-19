@@ -13,18 +13,31 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.actions.MessageSend
 import org.uqbar.arena.widgets.RadioSelector
+import org.uqbar.arena.layout.HorizontalLayout
 
 class InterpolatronWindow(parent: WindowOwner) extends SimpleWindow(parent, new Interpolatron) {
   
   override def createMainTemplate(mainPanel: Panel) = {
     this.setTitle("TP Matemática Superior 2C 2013")
-    this.setTaskDescription("Calculadora de polinomios interpoladores utilizando Newton-Gregory")
+    this.setTaskDescription("Método de Newton-Gregory")
     super.createMainTemplate(mainPanel)
   }
   
   override def createFormPanel(mainPanel: Panel) = {
+    
+    val controles_borrar = new Panel(mainPanel)
+    controles_borrar.setLayout(new HorizontalLayout)
+    
+    val boton_quitar = new Button(controles_borrar)
+    boton_quitar.setCaption("Quitar seleccionado")
+    boton_quitar.onClick(new MessageSend(getModelObject, "quitar"))
+    
+    val boton_reset = new Button(controles_borrar)
+    boton_reset.setCaption("Quitar todos")
+    boton_reset.onClick(new MessageSend(getModelObject, "reset"))
+    
     val tabla = new Table[Punto](mainPanel, classOf[Punto])
-    tabla.setHeigth(300)
+    tabla.setHeigth(200)
     tabla.bindItemsToProperty("puntos")
     tabla.bindValueToProperty("puntoSeleccionado")
     
@@ -34,13 +47,20 @@ class InterpolatronWindow(parent: WindowOwner) extends SimpleWindow(parent, new 
     val ordenadas = new Column[Punto](tabla)
     ordenadas.setTitle("Y").bindContentsToProperty("y")
     
-    val label_x = new Label(mainPanel).setText("x")
-    val input_x = new TextBox(mainPanel).bindValueToProperty("x")
-    val label_y = new Label(mainPanel).setText("y")
-    val input_y = new TextBox(mainPanel).bindValueToProperty("y")
-    
     // TODO: Ver como funciona esto
     val modoRadio = new RadioSelector(mainPanel).setContents(List("Progresivo", "Regresivo").asJava, "Modo")
+    
+    // TODO: Refactorizar en una clase, codigo duplicado
+    val x = new Panel(mainPanel)
+    x.setLayout(new HorizontalLayout)
+    val label_x = new Label(x).setText("x")
+    val input_x = new TextBox(x).setWidth(200).bindValueToProperty("x")
+    
+    val y = new Panel(mainPanel)
+    y.setLayout(new HorizontalLayout)
+    val label_y = new Label(y).setText("y")
+    val input_y = new TextBox(y).setWidth(200).bindValueToProperty("y")
+    
     
   }
   
@@ -50,9 +70,6 @@ class InterpolatronWindow(parent: WindowOwner) extends SimpleWindow(parent, new 
     boton_agregar.onClick(new MessageSend(getModelObject, "agregar"))
     boton_agregar.disableOnError
     
-    val boton_quitar = new Button(actionsPanel)
-    boton_quitar.setCaption("Quitar seleccionado")
-    boton_quitar.onClick(new MessageSend(getModelObject, "quitar"))
     
     val boton_calcular = new Button(actionsPanel)
     boton_calcular.setCaption("Calcular polinomio")

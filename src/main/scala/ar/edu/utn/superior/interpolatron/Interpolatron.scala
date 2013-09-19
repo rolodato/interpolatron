@@ -43,8 +43,14 @@ class Interpolatron {
 	
 	private def puntoIngresado = new Punto(x, y)
 		
-	def agregar { verificarRepetido(puntoIngresado); puntos ::= puntoIngresado }
+	def agregar {
+	  verificarRepetido(puntoIngresado)
+	  puntos ::= puntoIngresado
+	}
+	
 	def quitar { puntos = puntos filter {_ != puntoSeleccionado} }
+	
+	def reset {x = 0; y = 0; puntos = List()}
 	
 }
 
