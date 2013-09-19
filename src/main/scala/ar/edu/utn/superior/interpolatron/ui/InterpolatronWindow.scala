@@ -50,18 +50,9 @@ class InterpolatronWindow(parent: WindowOwner) extends SimpleWindow(parent, new 
     // TODO: Ver como funciona esto
     val modoRadio = new RadioSelector(mainPanel).setContents(List("Progresivo", "Regresivo").asJava, "Modo")
     
-    // TODO: Refactorizar en una clase, codigo duplicado
-    val x = new Panel(mainPanel)
-    x.setLayout(new HorizontalLayout)
-    val label_x = new Label(x).setText("x")
-    val input_x = new TextBox(x).setWidth(200).bindValueToProperty("x")
-    
-    val y = new Panel(mainPanel)
-    y.setLayout(new HorizontalLayout)
-    val label_y = new Label(y).setText("y")
-    val input_y = new TextBox(y).setWidth(200).bindValueToProperty("y")
-    
-    
+    val inputX = new CoordenadaInput(mainPanel, "x")
+    val inputY = new CoordenadaInput(mainPanel, "y")
+        
   }
   
   override def addActions(actionsPanel: Panel) = {
