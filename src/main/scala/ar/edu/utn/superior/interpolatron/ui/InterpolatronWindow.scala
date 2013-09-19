@@ -48,6 +48,7 @@ class InterpolatronWindow(parent: WindowOwner) extends SimpleWindow(parent, new 
     val boton_agregar = new Button(actionsPanel)
     boton_agregar.setCaption("Agregar punto")
     boton_agregar.onClick(new MessageSend(getModelObject, "agregar"))
+    boton_agregar.disableOnError
     
     val boton_quitar = new Button(actionsPanel)
     boton_quitar.setCaption("Quitar seleccionado")
