@@ -37,12 +37,14 @@ class Interpolatron {
 	var x: Double = _
 	var y: Double = _
 	
+	var puntoSeleccionado: Punto = _
+	
 	def getPuntos = puntos.sortBy{p => p.x}.asJava
 	
 	private def puntoIngresado = new Punto(x, y)
-	
+		
 	def agregar { verificarRepetido(puntoIngresado); puntos ::= puntoIngresado }
-	//def quitar { puntos -= puntoIngresado }
+	def quitar { puntos = puntos filter {_ != puntoSeleccionado} }
 	
 }
 
