@@ -14,7 +14,7 @@ class Interpolatron {
 		puntos match {
 			case Nil => 0 // Evitar warning
 			case p :: Nil => p.y
-			case p :: ps => (difDiv(puntos.tail) - difDiv(puntos.init)) / (ps.last.x - ps.head.x)
+			case p :: ps => (difDiv(puntos.tail) - difDiv(puntos.init)) / (puntos.last.x - puntos.head.x)
 		}
 	}
 
