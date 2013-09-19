@@ -1,19 +1,48 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ar.edu.utn.superior</groupId>
-  <artifactId>interpolatron</artifactId>
-  <version>0.0.1</version>
-  <description>					</description>
-  <dependencies>
-  	<dependency>
-  		<groupId>org.scalatest</groupId>
-  		<artifactId>scalatest_2.10</artifactId>
-  		<version>1.9.1</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.scala-lang</groupId>
-  		<artifactId>scala-swing</artifactId>
-  		<version>2.11.0-M4</version>
-  	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ar.edu.utn.superior</groupId>
+	<artifactId>interpolatron</artifactId>
+	<version>0.0.1</version>
+	<description>TP Matemática Superior 2do cuatrimestre 2013</description>
+	
+	<parent>
+		<groupId>org.uqbar-project</groupId>
+		<artifactId>uqbar-scala-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	
+	<repositories>
+		<repository>
+			<id>uqbar-wiki.org-releases</id>
+			<name>uqbar-wiki.org-releases</name>
+			<url>http://uqbar-wiki.org/mvn/releases</url>
+		</repository>
+		<repository>
+			<snapshots />
+			<id>uqbar-wiki.org-snapshots</id>
+			<name>uqbar-wiki.org-snapshots</name>
+			<url>http://uqbar-wiki.org/mvn/snapshots</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-compiler</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.uqbar-project</groupId>
+			<artifactId>arena-jface</artifactId>
+			<version>3.3-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	
 </project>
