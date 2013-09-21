@@ -20,11 +20,11 @@ Puede correrse en cualquier plataforma que tenga instalado un entorno Java.
 Instalación
 -----------
 
-Ejecutar `mvn install` para generar un archivo .exe ejecutable en Windows.
+Ejecutar `mvn install` para generar un archivo .exe para Windows y un .jar ejecutable en cualquier plataforma.
 
-Para ejecutar el .jar directamente en cualquier plataforma:
+Para ejecutar el .jar directamente:
 
-    java -Djava.system.class.loader=com.uqbar.apo.APOClassLoader -jar 
+    java -Djava.system.class.loader=com.uqbar.apo.APOClassLoader -jar interpolatron-0.0.1-shaded.jar
     
 Tecnologías utilizadas
 ----------------------
