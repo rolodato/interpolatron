@@ -5,14 +5,115 @@
 	<groupId>ar.edu.utn.superior</groupId>
 	<artifactId>interpolatron</artifactId>
 	<version>0.0.1</version>
+	<packaging>jar</packaging>
 	<description>TP Matemática Superior 2do cuatrimestre 2013</description>
-	
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<parent>
 		<groupId>org.uqbar-project</groupId>
 		<artifactId>uqbar-scala-parent</artifactId>
 		<version>1.0</version>
 	</parent>
-	
+
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.uqbar-project</groupId>
+			<artifactId>arena-jface</artifactId>
+			<version>3.3-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<forceCreation>true</forceCreation>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<minimizeJar>true</minimizeJar>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>ar.edu.utn.superior.interpolatron.runnable.InterpolatronApplication</mainClass>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.5.2</version>
+				<executions>
+					<execution>
+						<id>l4j-clui</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-SHADED.jar</jar>
+							<cmdLine>-Djava.system.class.loader=com.uqbar.apo.APOClassLoader</cmdLine>
+							<outfile>${project.build.directory}/Interpolatron.exe</outfile>
+							<downloadUrl>http://java.com/download</downloadUrl>
+							<jre>
+								<minVersion>1.6.0</minVersion>
+								<jdkPreference>preferJre</jdkPreference>
+							</jre>
+							<versionInfo>
+								<fileVersion>1.0.0.0</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>Trabajo Práctico de Matemática Superior</fileDescription>
+								<copyright>2013</copyright>
+								<productVersion>1.0.0.0</productVersion>
+								<txtProductVersion>1.0.0.0</txtProductVersion>
+								<productName>${project.name}</productName>
+								<companyName>UTN Buenos Aires</companyName>
+								<internalName>interpolatron</internalName>
+								<originalFilename>interpolatron.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
 	<repositories>
 		<repository>
 			<id>uqbar-wiki.org-releases</id>
@@ -27,22 +128,4 @@
 		</repository>
 	</repositories>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-compiler</artifactId>
-			<version>2.10.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>2.10.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.uqbar-project</groupId>
-			<artifactId>arena-jface</artifactId>
-			<version>3.3-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
-	
 </project>
