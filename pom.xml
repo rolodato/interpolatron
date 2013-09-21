@@ -49,7 +49,6 @@
 						</goals>
 						<configuration>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
-							<minimizeJar>true</minimizeJar>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
@@ -86,13 +85,18 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<jar>${project.build.directory}/${project.artifactId}-${project.version}-SHADED.jar</jar>
-							<cmdLine>-Djava.system.class.loader=com.uqbar.apo.APOClassLoader</cmdLine>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
 							<outfile>${project.build.directory}/Interpolatron.exe</outfile>
 							<downloadUrl>http://java.com/download</downloadUrl>
+							<classPath>
+								<mainClass>ar.edu.utn.superior.interpolatron.runnable.InterpolatronApplication</mainClass>
+							</classPath>
 							<jre>
 								<minVersion>1.6.0</minVersion>
 								<jdkPreference>preferJre</jdkPreference>
+								<opts>
+									<opt>-Djava.system.class.loader=com.uqbar.apo.APOClassLoader</opt>
+								</opts>
 							</jre>
 							<versionInfo>
 								<fileVersion>1.0.0.0</fileVersion>
