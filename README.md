@@ -24,7 +24,7 @@ Ejecutar `mvn install` para generar un archivo .exe para Windows y un .jar ejecu
 
 Para ejecutar el .jar directamente:
 
-    java -Djava.system.class.loader=com.uqbar.apo.APOClassLoader -jar interpolatron-0.0.1-shaded.jar
+    java -Djava.system.class.loader=com.uqbar.apo.APOClassLoader -jar interpolatron*shaded.jar
     
 Tecnologías utilizadas
 ----------------------
