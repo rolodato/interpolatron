@@ -35,8 +35,8 @@ class Interpolatron {
 	
 	//P(x) = a0 + a1.(X-X0) + a2.(X-X0).(X-X1) + … + an.(X-X0).(X-X1)…(X-Xn-1) (Progresivo)
 	//P(x) = b0 + b1.(X-Xn) + b2.(X-Xn).(X-Xn-1) + … + bn.(X-Xn).(X-Xn-1)…(X-X1) (Regresivo)
-	def armarPolinomios = {
-	  val polProgresivo: String = "P(x) = " + diferenciaDividida(1) + " + " + (for(i<- 2 to puntos.size) yield diferenciaDividida(i) + valorX(i-2))
+	def armarPolinomios: String = {
+	  "P(x) = " + diferenciaDividida(1) + " + " + (for(i<- 2 to puntos.size) yield diferenciaDividida(i) + valorX(i-2))
 	}
 	
 	def valorX(n: Int): String = ".(x-" + puntos(n).x + ") + " 
