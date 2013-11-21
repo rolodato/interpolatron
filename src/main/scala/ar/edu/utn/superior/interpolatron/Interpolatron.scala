@@ -1,8 +1,8 @@
 package ar.edu.utn.superior.interpolatron
 
-import scala.collection.mutable.SortedSet
+import scala.collection.JavaConverters.seqAsJavaListConverter
+
 import org.uqbar.commons.utils.Observable
-import scala.collection.JavaConverters._
 
 @Observable
 class Interpolatron {
@@ -32,6 +32,14 @@ class Interpolatron {
 	  if (puntos isEmpty) throw new NingunPuntoIngresadoException
 	  (1 to puntos.size) map {i => diferenciaDividida(i)}
 	}
+	
+	//P(x) = a0 + a1.(X-X0) + a2.(X-X0).(X-X1) + … + an.(X-X0).(X-X1)…(X-Xn-1) (Progresivo)
+	//P(x) = b0 + b1.(X-Xn) + b2.(X-Xn).(X-Xn-1) + … + bn.(X-Xn).(X-Xn-1)…(X-X1) (Regresivo)
+	def armarPolinomios = {
+	  val polProgresivo: String = "P(x) = " + diferenciaDividida(1) + " + " + (for(i<- 2 to puntos.size) yield diferenciaDividida(i) + valorX(i-2))
+	}
+	
+	def valorX(n: Int): String = ".(x-" + puntos(n).x + ") + " 
 	
 	// UI
 	var x: Double = _
