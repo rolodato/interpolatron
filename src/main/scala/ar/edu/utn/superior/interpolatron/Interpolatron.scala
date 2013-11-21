@@ -1,8 +1,9 @@
 package ar.edu.utn.superior.interpolatron
 
 import scala.collection.JavaConverters.seqAsJavaListConverter
-
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.UserException
+
 
 @Observable
 class Interpolatron {
@@ -24,12 +25,12 @@ class Interpolatron {
 		
 	private def verificarRepetido(punto: Punto) {
 	  if (abscisas contains punto.x) {
-	    throw new PuntoDuplicadoException
+	    throw new UserException("Ya existe un punto con la misma abscisa.")
 	  }
 	}
 	
 	def diferenciasDivididas = {
-	  if (puntos isEmpty) throw new NingunPuntoIngresadoException
+	  if (puntos isEmpty) throw new UserException("No se ingresó ningún punto.")
 	  (1 to puntos.size) map {i => diferenciaDividida(i)}
 	}
 	
@@ -71,6 +72,3 @@ class Interpolatron {
 	def reset {x = 0; y = 0; puntos = List()}
 	
 }
-
-class NingunPuntoIngresadoException extends RuntimeException
-class PuntoDuplicadoException extends RuntimeException
