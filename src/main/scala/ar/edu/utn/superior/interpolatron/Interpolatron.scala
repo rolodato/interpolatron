@@ -60,7 +60,7 @@ class Interpolatron {
   }
 
   // Evaluar Polinomio en x_eval
-  def evaluar: Double = polinomioEvaluado(puntos.size)
+  def evaluar: String = "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size)
 
   def polinomioEvaluado(n: Int): Double = n match {
     case 1 => diferenciaDivididaProg(1)
