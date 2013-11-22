@@ -11,7 +11,6 @@ Integrantes
 
 * Tomás Gropper ([tomasgropper](http://github.com/tomasgropper))
 * Rodrigo López Dato ([rolodato](http://github.com/rolodato))
-* Cristian García ([cristiann91](http://github.com/cristiann91))
 
 Requisitos
 ----------
