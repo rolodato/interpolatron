@@ -11,6 +11,8 @@ class Interpolatron {
 
   var puntos = List[Punto]()
 
+  val polinomio = new Polinomio
+
   // Diferencias divididas
   private def difDiv(puntos: List[Punto]): Double = {
     puntos match {
@@ -30,15 +32,21 @@ class Interpolatron {
   }
 
   // Calcular Grado
-  def conocerGrado: Int = armarPolinomioProgresivo.filter(c => c == '+').size
+  def conocerGrado: Int = negrada(puntos.size) //armarPolinomioProgresivo.filter(c => c == '+').size
 
+  def negrada(n: Int): Int = n match {
+    case 1 => 0
+    case _ => negrada(n - 1) + (if (diferenciaDivididaProg(n) != 0) 1 else 0)
+  }
   // Armar Polinomio Progresivo
   // P(x) = a0 + a1.(X-X0) + a2.(X-X0).(X-X1) + … + an.(X-X0).(X-X1)…(X-Xn-1) (Progresivo)
-  def armarPolinomioProgresivo: String = "P(x) = " + progresivo(puntos.size)
+  def armarPolinomioProgresivo: String = {
+    "P(x) = " + progresivo(puntos.size)
+  }
 
   def progresivo(n: Int): String = n match {
-    case 1 => diferenciaDivididaProg(1).toString
-    case _ => progresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + diferenciaDivididaProg(n) + armarProductoProg(n - 2) else "")
+    case 1 => truncateAt(diferenciaDivididaProg(1), 3).toString
+    case _ => progresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + truncateAt(diferenciaDivididaProg(n), 3) + armarProductoProg(n - 2) else "")
   }
 
   def armarProductoProg(n: Int): String = n match {
@@ -52,8 +60,8 @@ class Interpolatron {
   def armarPolinomioRegresivo: String = "P(x) = " + regresivo(puntos.size)
 
   def regresivo(n: Int): String = n match {
-    case 1 => diferenciaDivididaReg(n).toString
-    case _ => regresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + diferenciaDivididaReg(n) + armarProductoReg(n - 2) else "")
+    case 1 => truncateAt(diferenciaDivididaReg(n), 3).toString
+    case _ => regresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + truncateAt(diferenciaDivididaReg(n), 3) + armarProductoReg(n - 2) else "")
   }
 
   def armarProductoReg(n: Int): String = n match {
@@ -62,11 +70,11 @@ class Interpolatron {
   }
 
   // Evaluar Polinomio en x_eval
-  var evaluar_resultado = "XXX"
-  
+  var evaluar_resultado = ""
+
   def evaluar {
     evaluar_resultado = "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size).toString
-    ObservableUtils.firePropertyChanged(this,"evaluar_resultado", "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size).toString)
+    ObservableUtils.firePropertyChanged(this, "evaluar_resultado", "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size).toString)
   }
 
   def polinomioEvaluado(n: Int): Double = n match {
@@ -89,6 +97,11 @@ class Interpolatron {
   private def verificarRepetido(punto: Punto) =
     if (abscisas contains punto.x)
       throw new UserException("Ya existe un punto con la misma abscisa.")
+
+  def truncateAt(n: Double, p: Int): Double = {
+    val s = math pow (10, p)
+    (math floor n * s) / s
+  }
 
   // UI
   var x: Double = _
@@ -118,7 +131,7 @@ class Interpolatron {
   def reset {
     x = 0;
     y = 0;
-    puntos = List(); 
+    puntos = List();
     ObservableUtils.firePropertyChanged(this, "hayPuntos", hayPuntos)
   }
 
