@@ -28,9 +28,10 @@ class EvaluarWindow(parent: WindowOwner, model: Interpolatron) extends SimpleWin
 
   override def createFormPanel(mainPanel: Panel) = {
 
-    val progresivo = new Label(mainPanel).setText(getModelObject.armarPolinomioProgresivo + " (progresivo)")
-    val regresivo = new Label(mainPanel).setText(getModelObject.armarPolinomioRegresivo + " (regresivo)")
+    val regresivo = new Label(mainPanel).setText(getModelObject.armarPolinomioRegresivo + " (progresivo)")
+    val progresivo = new Label(mainPanel).setText(getModelObject.armarPolinomioProgresivo + " (regresivo)")
     val grado = new Label(mainPanel).setText("Grado: " + getModelObject.conocerGrado)
+    val cant_puntos = new Label(mainPanel).setText("Puntos ingresados: " + getModelObject.puntos.size)
 
     val inputX = new CoordenadaInput(mainPanel, "x_eval")
     inputX.label.setText("x")
@@ -41,12 +42,11 @@ class EvaluarWindow(parent: WindowOwner, model: Interpolatron) extends SimpleWin
     actionsPanel.setLayout(new VerticalLayout)
     val boton_evaluar = new Button(actionsPanel)
     boton_evaluar.setCaption("Evaluar polinomio")
-    	.onClick(new MessageSend(getModelObject, "evaluar"))
-    	.setWidth(500)
-    
+      .onClick(new MessageSend(getModelObject, "evaluar"))
+      .setWidth(500)
+
     val resultado = new Label(actionsPanel)
     resultado.bindValueToProperty("evaluar_resultado")
   }
-  
-  
+
 }
