@@ -3,6 +3,8 @@ package ar.edu.utn.superior.interpolatron
 import scala.collection.JavaConverters.seqAsJavaListConverter
 import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.UserException
+import org.uqbar.commons.model.ObservableUtils
+import com.sun.org.apache.xml.internal.serializer.ToStream
 
 @Observable
 class Interpolatron {
@@ -60,7 +62,12 @@ class Interpolatron {
   }
 
   // Evaluar Polinomio en x_eval
-  def evaluar: String = "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size)
+  var evaluar_resultado = "XXX"
+  
+  def evaluar {
+    evaluar_resultado = "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size).toString
+    ObservableUtils.firePropertyChanged(this,"evaluar_resultado", "P(" + x_eval + ") = " + polinomioEvaluado(puntos.size).toString)
+  }
 
   def polinomioEvaluado(n: Int): Double = n match {
     case 1 => diferenciaDivididaProg(1)
@@ -75,7 +82,7 @@ class Interpolatron {
   def valorEv(n: Int): Double = x_eval - puntos(n).x
 
   // Metodos auxiliares
-  def valorX(n: Int): String = ".(x-" + puntos(n).x + ")"
+  def valorX(n: Int): String = " * (x - " + puntos(n).x + ")"
 
   private def abscisas = puntos map { p => p.x }
 
@@ -98,10 +105,23 @@ class Interpolatron {
   def agregar {
     verificarRepetido(puntoIngresado)
     puntos ::= puntoIngresado
+    ObservableUtils.firePropertyChanged(this, "puntos", puntos)
+    ObservableUtils.firePropertyChanged(this, "hayPuntos", hayPuntos)
   }
 
-  def quitar { puntos = puntos filter { _ != puntoSeleccionado } }
+  def quitar {
+    puntos = puntos filter { _ != puntoSeleccionado }
+    ObservableUtils.firePropertyChanged(this, "puntos", puntos)
+    ObservableUtils.firePropertyChanged(this, "hayPuntos", hayPuntos)
+  }
 
-  def reset { x = 0; y = 0; puntos = List() }
+  def reset {
+    x = 0;
+    y = 0;
+    puntos = List(); 
+    ObservableUtils.firePropertyChanged(this, "hayPuntos", hayPuntos)
+  }
+
+  def hayPuntos = puntos.size > 0
 
 }
