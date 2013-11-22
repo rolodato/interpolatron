@@ -32,11 +32,11 @@ class Interpolatron {
   }
 
   // Calcular Grado
-  def conocerGrado: Int = negrada(puntos.size) //armarPolinomioProgresivo.filter(c => c == '+').size
+  def conocerGrado: Int = calcularGrado(puntos.size) //armarPolinomioProgresivo.filter(c => c == '+').size
 
-  def negrada(n: Int): Int = n match {
+  def calcularGrado(n: Int): Int = n match {
     case 1 => 0
-    case _ => negrada(n - 1) + (if (diferenciaDivididaProg(n) != 0) 1 else 0)
+    case _ => calcularGrado(n - 1) + (if (diferenciaDivididaProg(n) != 0) 1 else 0)
   }
   // Armar Polinomio Progresivo
   // P(x) = a0 + a1.(X-X0) + a2.(X-X0).(X-X1) + … + an.(X-X0).(X-X1)…(X-Xn-1) (Progresivo)
