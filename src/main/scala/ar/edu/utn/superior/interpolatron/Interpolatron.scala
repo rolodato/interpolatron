@@ -35,6 +35,8 @@ class Interpolatron {
     (1 to puntos.size) map { i => diferenciaDivididaProg(i) }
   }
 
+  def conocerGrado: Int = armarPolinomioProgresivo.filter(c => c == '+').size
+
   //P(x) = a0 + a1.(X-X0) + a2.(X-X0).(X-X1) + … + an.(X-X0).(X-X1)…(X-Xn-1) (Progresivo)
   //P(x) = b0 + b1.(X-Xn) + b2.(X-Xn).(X-Xn-1) + … + bn.(X-Xn).(X-Xn-1)…(X-X1) (Regresivo)
   def armarPolinomioProgresivo: String = {
@@ -47,12 +49,12 @@ class Interpolatron {
 
   def progresivo(n: Int): String = n match {
     case 1 => diferenciaDivididaProg(1).toString
-    case _ => progresivo(n - 1) + " + " + diferenciaDivididaProg(n) + armarProductoProg(n - 2)
+    case _ => progresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + diferenciaDivididaProg(n) + armarProductoProg(n - 2) else "")
   }
 
   def regresivo(n: Int): String = n match {
     case 1 => diferenciaDivididaReg(n).toString
-    case _ => regresivo(n - 1) + " + " + diferenciaDivididaReg(n) + armarProductoReg(n - 2)
+    case _ => regresivo(n - 1) + (if (diferenciaDivididaProg(n) != 0) " + " + diferenciaDivididaReg(n) + armarProductoReg(n - 2) else "")
   }
 
   def armarProductoProg(n: Int): String = n match {
